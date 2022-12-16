@@ -44,7 +44,11 @@ composer update
 ```
 crear archivo .env y conectar con la base de datos 
 ```
+Correr migraciones
+```
 php artisan migrate
+```
+Correr Proyecto
 ```
 php artisan serve
 ```
