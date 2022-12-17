@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('Inicio');
+Route::get('/contacto', [App\Http\Controllers\HomeController::class, 'contact'])->name('Contacto');
+Route::get('/producto/{id}', [App\Http\Controllers\ProductsController::class, 'show'])->name('Detalles');
+Route::get('/anadir/{id}', [App\Http\Controllers\ProductsController::class, 'addShoping'])->name('add-shoping');
