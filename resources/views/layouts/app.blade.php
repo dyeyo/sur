@@ -14,6 +14,7 @@
   <meta name="keywords" content="">
   <!-- meta character set -->
   <meta charset="UTF-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- Site Title -->
   <title>Karma Shop</title>
   <!--
@@ -30,6 +31,39 @@
   <link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.skinFlat.css') }}" />
   <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
   <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+  <style>
+  .colored-toast.swal2-icon-success {
+    background-color: #a5dc86 !important;
+  }
+
+  .colored-toast.swal2-icon-error {
+    background-color: #f27474 !important;
+  }
+
+  .colored-toast.swal2-icon-warning {
+    background-color: #f8bb86 !important;
+  }
+
+  .colored-toast.swal2-icon-info {
+    background-color: #3fc3ee !important;
+  }
+
+  .colored-toast.swal2-icon-question {
+    background-color: #87adbd !important;
+  }
+
+  .colored-toast .swal2-title {
+    color: white;
+  }
+
+  .colored-toast .swal2-close {
+    color: white;
+  }
+
+  .colored-toast .swal2-html-container {
+    color: white;
+  }
+</style>
 </head>
 
 <body>
@@ -54,6 +88,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
   <script src="{{ asset('js/gmaps.min.js') }}"></script>
   <script src="{{ asset('js/main.js') }}"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
