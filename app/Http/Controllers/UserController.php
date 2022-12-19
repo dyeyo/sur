@@ -19,8 +19,8 @@ class UserController extends Controller
 
     public function register()
     {
-      $data['title']='register';
-     return view('auth.register',$data);
+      
+     return view('auth.register');
     }
 
     public function registerVerify(Request $request)
@@ -29,13 +29,24 @@ class UserController extends Controller
             'name' => 'required',
             'lastname' =>'required',
             'city'=>'required',
-            'address' => 'required|min:10',
-            'phone' => 'required|min:10',
+            'address' => 'required',
+            'phone' => 'required',
             'identification'=>'required',
             'email'=> 'required|unique:users,email',
             'password'=>'required',
             'password_confirm' =>'required|same:password',
             
+         ],['name.required'=>'los nombres son requeridos',
+            'lastname.required'=>'los apellidos son requeridos',
+            'city.required'=>'la  ciudad es requerida',
+            'address.required'=>'la  direccion es requerida',
+            'phone.required'=>'el numero de celular es requerida',
+            'identification.required'=>'la  identificacion es requerida',
+            'email.required'=>'el correo es requerido',
+            'password.required'=>'la  contraseña  es requerida',
+            'password.required'=>'la confirmacion de  contraseña  es requerida',
+            'email.unique'=>'el correo ya ha sido usado'
+
          ]);
 
          $user = new User([
@@ -56,7 +67,7 @@ class UserController extends Controller
     
     public function login()
     {
-      $data['title'] = 'Login';
+      
        return view('auth.login');
     }
 
@@ -64,12 +75,17 @@ class UserController extends Controller
     {
        $request ->validate([
                 'email'=>'required|email',
-                'password'=>'required|min:4'
+                'password'=>'required'
+       ],[
+        'email.required'=>'el correo es requerido',
+        'password.required'=>'el contraseña es requerida'
+
+
        ]);
 
        if(Auth::attempt(['email'=>$request->email, 'password'=> $request->password])){
             $request->session()->regenerate();
-            return redirect()->route(dashboard);
+            return redirect()->route('Inicio');
        }
 
        return back()->withErrors(['Invalid_credentials'=>'usuario o contraseña incorrecta']);
@@ -78,8 +94,8 @@ class UserController extends Controller
     
     public function password()
     {
-        $data['title'] = 'Change Password';
-        return view('auth.password', $data);
+       
+        return view('auth.password');
     }
 
     public function password_action(Request $request)
@@ -87,12 +103,18 @@ class UserController extends Controller
         $request->validate([
             'old_password' => 'required|current_password',
             'new_password' => 'required|confirmed',
+            'new_password_confirm'=>'required|same:new_password',
+        ],[
+            'old_password.required'=>'la anterior contraseña es requerida',
+            'new_password.required'=>'la nueva contraseña es requerida',
+            'new_password_confirm' => 'confirmar la nueva contraseña',
+
         ]);
         $user = User::find(Auth::id());
         $user->password = Hash::make($request->new_password);
         $user->save();
         $request->session()->regenerate();
-        return back()->with('success', 'Password changed!');
+        return back()->with('success', 'la contraseña fue cambiada!');
     }
 
     public function logout(Request $request)
