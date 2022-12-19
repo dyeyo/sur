@@ -6,12 +6,12 @@
     <div class="row s_product_inner">
       <div class="col-lg-6">
         <div class="s_Product_carousel">
-            @foreach ($product->images as $img )
-            <div class="single-prd-item">
-              <img class="img-fluid" src="{{url('/img/product/')}}/{{$img->image}}" alt="{{$img->image}}">
-            </div>
+          @foreach ($product->images as $img )
+          <div class="single-prd-item">
+            <img class="img-fluid" src="{{url('/img/product/')}}/{{$img->image}}" alt="{{$img->image}}">
+          </div>
           @endforeach
-          
+
         </div>
       </div>
       <div class="col-lg-5 offset-lg-1">
@@ -25,13 +25,19 @@
           <p>{{$product->description}}</p>
           <div class="product_count">
             <label for="qty">Cantidad:</label>
-            <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+            <input type="text" name="qty" id="cantidad" maxlength="12" value="1" title="Quantity:"
+              class="input-text qty">
             <button
-              onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+              onclick="var result = document.getElementById('cantidad'); var cantidad = result.value; if( !isNaN( cantidad )) result.value++;return false;"
               class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
           </div>
           <div class="card_area d-flex align-items-center">
-            <a class="primary-btn" href="#">Añadir al carrito</a>
+            <form method="POST">
+              {{method_field('POST')}}
+              {{csrf_field()}}
+              <button class="primary-btn" onclick="addShopingCar('{{$product->id}}')">Añadir al carrito</button>
+
+            </form>
           </div>
         </div>
       </div>
@@ -140,3 +146,61 @@
 </section>
 @endsection
 <!--================End Product Description Area =================-->
+
+<script>
+  function addShopingCar(product) {
+    event.preventDefault()
+    let token = document.querySelector('input[name=_token]').value
+    let quantity = document.getElementById('cantidad').value
+    let data = {
+      id: product,
+      quantity,
+    };
+    fetch(`http://127.0.0.1:8000/anadir/`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-TOKEN": token
+      }
+    })
+      .then(response => response.json())
+      .then(async sys => {
+        console.log(sys);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-right',
+          iconColor: 'white',
+          customClass: {
+            popup: 'colored-toast'
+          },
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true
+        })
+        await Toast.fire({
+          icon: 'success',
+          title: 'Produto añadido'
+        })
+      })
+      .catch(err => {
+        console.log(sys);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-right',
+          iconColor: 'white',
+          customClass: {
+            popup: 'colored-toast'
+          },
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true
+        })
+        Toast.fire({
+          icon: 'error',
+          title: 'Algo va mal, vuelve a intentarlo'
+        })
+      })
+  }
+</script>

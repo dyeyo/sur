@@ -15,6 +15,18 @@ class CreateShopingCarsTable extends Migration
     {
         Schema::create('shoping_cars', function (Blueprint $table) {
             $table->id();
+
+            $table->date('order_date')->nullable();
+            $table->string('status'); // Active, Pending, Approved, Cancelled, Finished
+
+            /**
+             * Foreing keys
+             */
+
+            // Relacion con user
+            $table->unsignedBigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
