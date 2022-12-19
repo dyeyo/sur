@@ -16,7 +16,7 @@
                     <ul class="nav navbar-nav menu_nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="{{ route('Inicio') }}">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('Contacto') }}">Contacto</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('Inicio') }}">Inico de sesion / Registro</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Inico de sesion / Registro</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
