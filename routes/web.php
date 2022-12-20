@@ -26,4 +26,6 @@ Route::post('password', [UserController::class, 'password_action'])->name('passw
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/contacto', [App\Http\Controllers\HomeController::class, 'contact'])->name('Contacto');
 Route::get('/producto/{id}', [App\Http\Controllers\ProductsController::class, 'show'])->name('Detalles');
+// Route::get('/carrito/{user}', [App\Http\Controllers\ShopingCarController::class, 'index'])->name('add-shoping');
+Route::get('/carrito', [App\Http\Controllers\ShopingCarController::class, 'index'])->name('shoping-car');
 Route::post('/anadir', [App\Http\Controllers\ShopingCarController::class, 'addShopingCar'])->name('add-shoping');

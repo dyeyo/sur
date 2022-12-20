@@ -23,8 +23,8 @@ class CreateDetailsShopingCarsTable extends Migration
              */
 
             // Relacion con carts
-            $table->unsignedBigInteger('car_id')->unsigned();
-            $table->foreign('car_id')->references('id')->on('shoping_cars')->onDelete('cascade');
+            $table->unsignedBigInteger('shoping_car_id')->unsigned();
+            $table->foreign('shoping_car_id')->references('id')->on('shoping_cars')->onDelete('cascade');
 
             // Relacion con produtcs
             $table->unsignedBigInteger('product_id')->unsigned();

@@ -10,72 +10,70 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-   
+
     public function index()
     {
-       //
+        //
     }
-    
+
 
     public function register()
     {
-      $data['title']='register';
-     return view('auth.register',$data);
+        $data['title'] = 'register';
+        return view('auth.register', $data);
     }
 
     public function registerVerify(Request $request)
     {
         $request->validate([
             'name' => 'required',
-            'lastname' =>'required',
-            'city'=>'required',
+            'lastname' => 'required',
+            'city' => 'required',
             'address' => 'required|min:10',
             'phone' => 'required|min:10',
-            'identification'=>'required',
-            'email'=> 'required|unique:users,email',
-            'password'=>'required',
-            'password_confirm' =>'required|same:password',
-            
-         ]);
+            'identification' => 'required',
+            'email' => 'required|unique:users,email',
+            'password' => 'required',
+            'password_confirm' => 'required|same:password',
 
-         $user = new User([
-            'name' => $request ->name,
-            'lastname' => $request ->lastname,
-            'city' => $request ->city,
-            'address'=> $request ->address,
-            'phone'=> $request ->phone,
-            'identification'=> $request ->identification,
-            'email'=> $request ->email,
-            'password' => Hash::make($request ->password),
-         ]);
+        ]);
 
-         $user->save();
-         return redirect()->route('login')->with('success','Usuario registrado correctamente');
+        $user = new User([
+            'name' => $request->name,
+            'lastname' => $request->lastname,
+            'city' => $request->city,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'identification' => $request->identification,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
+        $user->save();
+        return redirect()->route('login')->with('success', 'Usuario registrado correctamente');
     }
-    
+
     public function login()
     {
-      $data['title'] = 'Login';
-       return view('auth.login');
+        $data['title'] = 'Login';
+        return view('auth.login');
     }
 
     public function loginVerify(Request $request)
     {
-       $request ->validate([
-                'email'=>'required|email',
-                'password'=>'required|min:4'
-       ]);
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:4'
+        ]);
 
-       if(Auth::attempt(['email'=>$request->email, 'password'=> $request->password])){
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $request->session()->regenerate();
             return redirect()->route(dashboard);
-       }
+        }
 
-       return back()->withErrors(['Invalid_credentials'=>'usuario o contraseña incorrecta']);
-
+        return back()->withErrors(['Invalid_credentials' => 'usuario o contraseña incorrecta']);
     }
-    
+
     public function password()
     {
         $data['title'] = 'Change Password';
@@ -102,7 +100,4 @@ class UserController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
-
 }
-
-

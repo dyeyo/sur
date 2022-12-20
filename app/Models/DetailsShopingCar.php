@@ -10,15 +10,13 @@ class DetailsShopingCar extends Model
     use HasFactory;
 
     protected $fillable = [
-        'quantity', 'cart_id', 'product_id'
+        'quantity', 'shoping_car_id', 'product_id'
     ];
 
-
-
     // Relacion uno a muchos entre Cart y CartDetail
-    public function carts()
+    public function cars()
     {
-        return $this->belongsTo(ShopingCar::class);
+        return $this->belongsTo(ShopingCar::class, 'shoping_car_id');
     }
 
     public function product()
