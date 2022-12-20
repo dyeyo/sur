@@ -119,7 +119,7 @@
 .s_product_text .list li a.active,
 .product_description_area .tab-content .total_rate .box_total h4,
 .single-footer-widget .bb-btn {
-  background: -webkit-linear-gradient(90deg, #F2BDD6 0%, #593244 100%)0%, ;
+  background: -webkit-linear-gradient(90deg, #F2BDD6 0%, #a96182 100%)0%, ;
   background: -moz- linear-gradient(177deg, #F2BDD6 0%, #a96182 100%);
   ;
   background: -o- linear-gradient(177deg, #F2BDD6 0%, #a96182 100%);
@@ -143,6 +143,7 @@
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
+  border-color: #F2BDD6;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
@@ -156,7 +157,7 @@
   height: 100%;
   width: 100%;
   content: "";
-  background: #000;
+  background: #e4b7e27d;
   opacity: 0;
   -webkit-transform: skew(40deg);
   -moz-transform: skew(40deg);
@@ -1545,8 +1546,8 @@ h6 {
 }
 
 .header_area .navbar .nav .nav-item.submenu ul .nav-item:hover .nav-link {
-  background: #593244;
-  color: #fff;
+  background: #f2bdd6;
+  color: #593244;
 }
 
 @media (min-width: 992px) {

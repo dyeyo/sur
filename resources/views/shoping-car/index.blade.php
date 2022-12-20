@@ -27,21 +27,25 @@
                 </div>
               </td>
               <td style="width: 10em;">
-                <h5>${{$car->product->price}} </h5>
+                <h5>$
+                  <input disabled class="inputCar" type="text" name="price" id="price"
+                    value="{{$car->product->price }} ">
+                </h5>
               </td>
               <td style="width: 10em;">
                 <div class="product_count">
-                  <input type="text" name="{{$car->product->name}}" id="{{$car->product->name}}" maxlength=""
+                  <input disabled type="text" name="{{$car->product->name}}" id="{{$car->product->name}}" maxlength=""
                     value="{{$car->quantity}}" title="Quantity:" class="input-text qty">
                   <button onclick="addQuantity('{{$car->product->stock}}','{{$car->product->name}}')"
                     class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                  <button onclick="restQuantity()" class="reduced items-count" type="button"><i
+                  <button onclick="restQuantity('{{$car->product->name}}')" class="reduced items-count" type="button"><i
                       class="lnr lnr-chevron-down"></i></button>
                 </div>
               </td>
               <td style="width: 6em;">
                 <h5>$
-                  <input type="text" name="total" id="total" value="{{$car->product->price * $car->quantity}} ">
+                  <input disabled class="inputCar" type="text" name="total" id="totalxprod"
+                    value="{{$car->product->price * $car->quantity}} ">
                 </h5>
               </td>
             </tr>
@@ -72,7 +76,7 @@
               </td>
               <td>
                 <h5>$
-                  <input type="text" name="total" id="total" value="">
+                  <input disabled type="text" name="total" id="total" value="">
                 </h5>
               </td>
             </tr>
@@ -85,17 +89,27 @@
 @endsection
 <script>
   function addQuantity(limit, name) {
-
-
-    let result = document.getElementById(name);
-    let sst = result.value;
-    if (!isNaN(sst) && limit > sst) result.value++;
+    let cantidad = document.getElementById(name).value;
+    let precio = document.getElementById('price').value;
+    console.log(cantidad);
+    console.log(precio);
+    console.log('cantidad * precio', cantidad * precio);
+    let recalculo = cantidad * precio;
+    if (!isNaN(sst) && limit > sst) {
+      cantidad.value++;
+      document.getElementById('totalxprod').value = recalculo;
+    }
     return false;
   }
 
-  function restQuantity() {
-    let result = document.getElementById('sst');
+  function restQuantity(name) {
+    let result = document.getElementById(name);
+    let precio = document.getElementById('price').value;
+    let total = document.getElementById('totalxprod').value;
     let sst = result.value;
+    let recalculo = total * precio
     if (!isNaN(sst) && sst > 0) result.value--; return false;
+    document.getElementById('totalxprod').value = recalculo;
+
   }
 </script>

@@ -63,6 +63,12 @@
   .colored-toast .swal2-html-container {
     color: white;
   }
+
+  .inputCar{
+        font-size: 15px;
+    background: #fff;
+    border: none;
+  }
 </style>
 </head>
 

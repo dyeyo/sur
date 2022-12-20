@@ -13,17 +13,15 @@
               <h6>${{$item->price}}</h6>
               <h6 class="l-through">${{$item->price+(19/100)}}</h6>
             </div>
-            <div class="prd-bottom">
-              <span class="social-info">
-                <form method="POST">
-                  {{method_field('POST')}}
-                  {{csrf_field()}}
-                  <button class="btn-link social-info" onclick="addShopingCar('{{$item->id}}')">
-                    <span class="ti-bag"></span>
-                    <p class="hover-text">Añadir</p>
-                  </button>
-                </form>
-              </span>
+            <div class="prd-bottom row" style="margin-left: 0em;">
+              <form method="POST" onclick="addShopingCar('{{$item->id}}')">
+                {{method_field('POST')}}
+                {{csrf_field()}}
+                <a class=" social-info">
+                  <span class="ti-bag"></span>
+                  <p class="hover-text">Añadir</p>
+                </a>
+              </form>
               <a href="{{route('Detalles',$item->id)}}" class="social-info">
                 <span class="lnr lnr-move"></span>
                 <p class="hover-text">Ver detalles</p>
