@@ -1,57 +1,41 @@
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
-<head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Favicon-->
-	<link rel="shortcut icon" href="img/fav.png">
-	<!-- Author Meta -->
-	<meta name="author" content="CodePixar">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	<!-- Site Title -->
-	<title>Karma Shop</title>
-	<!--
-		CSS
-		============================================= -->
-	<link rel="stylesheet" href="css/linearicons.css">
-	<link rel="stylesheet" href="css/owl.carousel.css">
-	<link rel="stylesheet" href="css/themify-icons.css">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/nice-select.css">
-	<link rel="stylesheet" href="css/nouislider.min.css">
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-@include('layouts.header')
+@extends('layouts.app')
+@section('content')	
 	<section class="login_box_area section_gap">
 		<div class="container ">
-			<div class="row justify-content-center">
-				<div class="col-lg-7">
-					<div class="register_form_inner">
-						<h3>register </h3>
-						@if($errors->any())
-        				@foreach($errors->all() as $err)
-        				<p class="alert alert-danger">{{ $err }}</p>
-        				@endforeach
+			
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="login_box_img">
+						<img class="img-fluid" src="img/login.jpg" alt="">
+						<div class="hover">
+							<h4>ya tienes una cuenta ?</h4>
+							<a class="primary-btn" href="{{route('login')}}">iniciar sesion</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="login_form_inner">
+						<h3>registrate</h3>
+						 @if(session('success'))
+                        <p class="alert alert-success">{{ session('success') }}</p>
         				@endif
-						<form class="row register_form" action="{{route('register.verify')}}" method="Post" id="registerForm" >
-							@csrf
-						<div class="col-md-12 form-group">
-								<input type="text"  class="form-control" name="name" placeholder="name" value="{{ old('name')}}" >
+       					 @if($errors->any())
+       					 @foreach($errors->all() as $err)
+      					<p class="alert alert-danger">{{ $err }}</p>
+      				    @endforeach
+      					@endif
+						<form   action="{{route('register.verify')}}" method="Post"  >
+								@csrf
+								<div class="col-md-12 form-group">
+								<input type="text"  class="form-control" name="name" placeholder="Nombres" value="{{ old('name')}}" >
 								@error('name')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
 								</small>
 								@enderror
-							</div>
+						</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="lastname" placeholder="Lastname" value="{{ old('lastname')}}">
+								<input type="text" class="form-control" name="lastname" placeholder="Apellidos" value="{{ old('lastname')}}">
 								@error('lastname')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
@@ -59,7 +43,7 @@
 								@enderror
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="city" placeholder="city"  value="{{ old('city')}}">
+								<input type="text" class="form-control" name="city" placeholder="Ciudad"  value="{{ old('city')}}">
 								@error('city')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
@@ -67,7 +51,7 @@
 								@enderror
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="address"  placeholder="address"  value="{{ old('address')}}" >
+								<input type="text" class="form-control" name="address"  placeholder="Direccion"  value="{{ old('address')}}" >
 								@error('address')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
@@ -75,7 +59,7 @@
 								@enderror
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="number" class="form-control" name="phone"  placeholder="phone" value="{{ old('phone')}}">
+								<input type="number" class="form-control" name="phone"  placeholder=" Numero de Celular" value="{{ old('phone')}}">
 								@error('phone')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
@@ -83,7 +67,7 @@
 								@enderror
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="number" class="form-control" name="identification" placeholder="identification" value="{{ old('identification')}}"  >
+								<input type="text" class="form-control" name="identification" placeholder="Identificacion" value="{{ old('identification')}}"  >
 								@error('identification')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
@@ -91,7 +75,7 @@
 								@enderror
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="email" class="form-control" name="email"  placeholder="email"  value="{{ old('email')}}" >
+								<input type="email" class="form-control" name="email"  placeholder="Correo electronico"  value="{{ old('email')}}" >
 								@error('email')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
@@ -99,7 +83,7 @@
 								@enderror
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" name="Password"  placeholder="Password" >
+								<input type="password" class="form-control" name="password"  placeholder="Contraseña" >
 								@error('password')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
@@ -107,7 +91,7 @@
 								@enderror
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" name="password_confirm"  placeholder="password_confirm" >
+								<input type="password" class="form-control" name="password_confirm"  placeholder="Confirmar Contraseña" >
 								@error('password_confirm')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
@@ -116,33 +100,15 @@
 							</div>
 							
 							<div class="col-md-12 form-group">
-								<button  class="primary-btn">Register</button>
-								<a href="{{route('password')}}">Forgot Password?</a>
-								<a href="{{route('login')}}">login</a>
+								<button  class="primary-btn">Registrate</button>
 							</div>
+							
 							
 						</form>
 					</div>
 				</div>
 			</div>
+			
 		</div>
 	</section>
-	@extends('layouts.footer')
-
-	<script src="js/vendor/jquery-2.2.4.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-	 crossorigin="anonymous"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-	<script src="js/jquery.ajaxchimp.min.js"></script>
-	<script src="js/jquery.nice-select.min.js"></script>
-	<script src="js/jquery.sticky.js"></script>
-	<script src="js/nouislider.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<!--gmaps Js-->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-	<script src="js/gmaps.min.js"></script>
-	<script src="js/main.js"></script>
-</body>
-
-</html>
+	@endsection
