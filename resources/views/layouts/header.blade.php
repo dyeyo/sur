@@ -25,7 +25,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('password') }}">Cambiar contraseña </a>
+                                    <a class="nav-link" href="{{ route('profile', auth()->user()->id) }}">Actualizar perfil </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('logout') }}">Cerrar sesion</a>

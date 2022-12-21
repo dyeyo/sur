@@ -168,6 +168,24 @@
       .then(response => response.json())
       .then(async sys => {
         console.log(sys);
+        if (sys.message == 'El producto ya existe en el carrito.') {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            iconColor: 'white',
+            customClass: {
+              popup: 'colored-toast'
+            },
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true
+          })
+          await Toast.fire({
+            icon: 'error',
+            title: sys.message
+          })
+          return;
+        }
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-right',

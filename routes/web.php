@@ -16,18 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// PUBLICAS
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('Inicio');
 Route::get('/login', [App\Http\Controllers\UserController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\UserController::class, 'loginVerify'])->name('login.verify');
 Route::get('/register', [App\Http\Controllers\UserController::class, 'register'])->name('register');
 Route::post('/register', [App\Http\Controllers\UserController::class, 'registerVerify'])->name('register.verify');
-Route::get('password', [UserController::class, 'password'])->name('password');
-Route::post('password', [UserController::class, 'password_action'])->name('password.action');
-Route::get('logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/contacto', [App\Http\Controllers\HomeController::class, 'contact'])->name('Contacto');
 Route::get('/producto/{id}', [App\Http\Controllers\ProductsController::class, 'show'])->name('Detalles');
+
+// PRIVADAS
+Route::get('/profile/{id}', [UserController::class, 'profile'])->name('profile');
+Route::put('/profile/{id}/update', [UserController::class, 'profileUpdate'])->name('profile.update');
+Route::get('logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/carrito/{id}', [App\Http\Controllers\ShopingCarController::class, 'index'])->name('Mi-Carrito');
-// Route::get('/carrito', [App\Http\Controllers\ShopingCarController::class, 'index'])->name('shoping-car');
 Route::post('/anadir', [App\Http\Controllers\ShopingCarController::class, 'addShopingCar'])->name('add-shoping');
 Route::put('/update-car/{id}', [App\Http\Controllers\ShopingCarController::class, 'updateShopingCar'])->name('update-shoping');
 Route::delete('/delete-car/{id}', [App\Http\Controllers\ShopingCarController::class, 'destroy'])->name('destroy-shoping');
