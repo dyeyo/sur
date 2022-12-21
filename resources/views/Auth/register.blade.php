@@ -59,7 +59,7 @@
 								@enderror
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="number" class="form-control" name="phone"  placeholder=" Numero de Celular" value="{{ old('phone')}}">
+								<input type="text" class="form-control" name="phone"  placeholder=" Numero de Celular" value="{{ old('phone')}}">
 								@error('phone')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
