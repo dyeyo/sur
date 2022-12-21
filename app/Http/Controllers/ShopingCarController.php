@@ -6,29 +6,38 @@ use App\Models\DetailsShopingCar;
 use App\Models\ShopingCar;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ShopingCarController extends Controller
 {
-    public function index()
-    // public function index($id)
+    public function index($id)
     {
-        $myCar = DetailsShopingCar::with('cars', 'product', 'product.images')
-            // ->where('id', $id)
-            ->get();
-        // dd($myCar);
-        return view('shoping-car.index', compact('myCar'));
+        $user = User::find(Auth::id());
+
+        $myCar = DetailsShopingCar::with('cars', 'cars.users', 'product', 'product.images')
+            ->whereHas('cars', function (Builder $query)  use ($id) {
+                $query->where('user_id', $id);
+            })->get();
+        if (count($myCar) > 0) {
+            if ($user->id === $myCar[0]->cars->user_id) {
+                return view('shoping-car.index', compact('myCar'));
+            } else {
+                return redirect('/');
+            }
+        } else {
+            return redirect('/');
+        }
     }
 
     public function addShopingCar(Request $request)
     {
-        // dd($request->quantity);
-        // $client = auth()->user();
-        // dd($client);
+        $client = auth()->user()->id;
         // car es metodo creado en el modelo User
         $car = new ShopingCar();
-        $car->user_id = 1;
+        $car->user_id = $client;
         $car->status = 'Pending'; // Active, pending, Approved, Cancelled, Finished
         $car->order_date = Carbon::now();
         $car->save();
@@ -43,13 +52,24 @@ class ShopingCarController extends Controller
         return response()->json(['success' => $message]);
     }
 
-    public function destroy(ShopingCar $car)
+    public function updateShopingCar(Request $request)
     {
-        if ($car->user_id == auth()->user()->id) {
+        $update_quantity =  DetailsShopingCar::find($request->id);
+        $update_quantity->quantity =  $request->quantity;
+        $update_quantity->save();
+        $message = 'Tu pedido se ha actualizado exitosamente.';
+        return response()->json(['success' => $message]);
+    }
 
-            $car->delete();
+
+
+    public function destroy(Request $request)
+    {
+        $idShpingCar = DetailsShopingCar::find($request->id);
+        DetailsShopingCar::find($request->id)->delete();
+        if (DetailsShopingCar::where('id', $request->id)->count() === 0) {
+            ShopingCar::where('id', $idShpingCar->shoping_car_id)->delete();
         }
-
         return response()->json(['success' => 'El pedido ha sido cancelado.']);
     }
 }

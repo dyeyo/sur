@@ -29,3 +29,5 @@ Route::get('/producto/{id}', [App\Http\Controllers\ProductsController::class, 's
 Route::get('/carrito/{id}', [App\Http\Controllers\ShopingCarController::class, 'index'])->name('Mi-Carrito');
 // Route::get('/carrito', [App\Http\Controllers\ShopingCarController::class, 'index'])->name('shoping-car');
 Route::post('/anadir', [App\Http\Controllers\ShopingCarController::class, 'addShopingCar'])->name('add-shoping');
+Route::put('/update-car/{id}', [App\Http\Controllers\ShopingCarController::class, 'updateShopingCar'])->name('update-shoping');
+Route::delete('/delete-car/{id}', [App\Http\Controllers\ShopingCarController::class, 'destroy'])->name('destroy-shoping');
