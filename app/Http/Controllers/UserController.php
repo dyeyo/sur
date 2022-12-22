@@ -85,7 +85,7 @@ class UserController extends Controller
         $userActuality->address = $request->address;
         $userActuality->phone = $request->phone;
         $userActuality->identification = $request->identification;
-        $userActuality->email = $request->email;
+       // $userActuality->email = $request->email;
 
         $userActuality->save();
         return redirect()->route('profile', $id)->with('success', 'Usuario actualizado correctamente');
@@ -108,7 +108,7 @@ class UserController extends Controller
             'address' => 'required',
             'phone' => 'required',
             'identification' => 'required',
-            'email' => 'required|unique:users,email' . $payload->id,
+            'email' => 'required|unique:users,email'.$payload->id,
             'password' => 'required',
             'password_confirm' => 'required|same:password',
 

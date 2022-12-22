@@ -16,15 +16,7 @@
 				<div class="col-lg-6">
 					<div class="login_form_inner">
 						<h3>registrate</h3>
-						 @if(session('success'))
-                        <p class="alert alert-success">{{ session('success') }}</p>
-        				@endif
-       					 @if($errors->any())
-       					 @foreach($errors->all() as $err)
-      					<p class="alert alert-danger">{{ $err }}</p>
-      				    @endforeach
-      					@endif
-						<form   action="{{route('register.verify')}}" method="Post"  >
+						 <form  class="row login_form" action="{{route('register.verify')}}" method="Post"  novalidate="novalidate">
 								@csrf
 								<div class="col-md-12 form-group">
 								<input type="text"  class="form-control" name="name" placeholder="Nombres" value="{{ old('name')}}" >
