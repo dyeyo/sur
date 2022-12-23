@@ -7,16 +7,11 @@ use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-
-    public function index()
-    {
-        //
-    }
-
 
     public function register()
     {
@@ -85,7 +80,7 @@ class UserController extends Controller
         $userActuality->address = $request->address;
         $userActuality->phone = $request->phone;
         $userActuality->identification = $request->identification;
-        $userActuality->email = $request->email;
+        // $userActuality->email = $request->email;
 
         $userActuality->save();
         return redirect()->route('profile', $id)->with('success', 'Usuario actualizado correctamente');
@@ -101,6 +96,8 @@ class UserController extends Controller
 
     public function validateInputs($payload)
     {
+        $flagId = true;
+        $payload->id ? $flagId = false : $flagId = true;
         $payload->validate([
             'name' => 'required',
             'lastname' => 'required',
@@ -108,9 +105,9 @@ class UserController extends Controller
             'address' => 'required',
             'phone' => 'required',
             'identification' => 'required',
-            'email' => 'required|unique:users,email' . $payload->id,
-            'password' => 'required',
-            'password_confirm' => 'required|same:password',
+            'email' => ['required', 'email', Rule::unique('users')->ignore($payload->id)],
+            'password' => [Rule::requiredIf($flagId)],
+            'password_confirm' => ['same:password', Rule::requiredIf($flagId)],
 
         ], [
             'name.required' => 'los nombres son requeridos',
@@ -123,7 +120,6 @@ class UserController extends Controller
             'password.required' => 'la  contraseña  es requerida',
             'password_confirm.required' => 'la confirmacion de  contraseña  es requerida',
             'email.unique' => 'el correo ya ha sido usado'
-
         ]);
     }
 }

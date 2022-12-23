@@ -97,8 +97,12 @@
                 <h4>{{$item->name}}</h4>
               </a>
               <div class="add-bag d-flex align-items-center justify-content-center">
-                <a class="add-btn" href=""><span class="ti-bag"></span></a>
-                <span class="add-text text-uppercase">Añadir al carrito</span>
+                <form method="POST" onclick="addShopingCar('{{$item->id}}')">
+                  {{method_field('POST')}}
+                  {{csrf_field()}}
+                  <a href="" class="primary-btn btn-sm btn-block"
+                    style="height: auto;width: 14em;margin-right: -131px;">Añadir al carrito</a>
+                </form>
               </div>
             </div>
           </div>

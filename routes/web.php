@@ -25,11 +25,12 @@ Route::post('/register', [App\Http\Controllers\UserController::class, 'registerV
 Route::get('/contacto', [App\Http\Controllers\HomeController::class, 'contact'])->name('Contacto');
 Route::get('/producto/{id}', [App\Http\Controllers\ProductsController::class, 'show'])->name('Detalles');
 
-// PRIVADAS
-Route::get('/profile/{id}', [UserController::class, 'profile'])->name('profile');
-Route::put('/profile/{id}/update', [UserController::class, 'profileUpdate'])->name('profile.update');
-Route::get('logout', [UserController::class, 'logout'])->name('logout');
-Route::get('/carrito/{id}', [App\Http\Controllers\ShopingCarController::class, 'index'])->name('Mi-Carrito');
-Route::post('/anadir', [App\Http\Controllers\ShopingCarController::class, 'addShopingCar'])->name('add-shoping');
-Route::put('/update-car/{id}', [App\Http\Controllers\ShopingCarController::class, 'updateShopingCar'])->name('update-shoping');
-Route::delete('/delete-car/{id}', [App\Http\Controllers\ShopingCarController::class, 'destroy'])->name('destroy-shoping');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile/{id}', [UserController::class, 'profile'])->name('profile');
+    Route::put('/profile/{id}/update', [UserController::class, 'profileUpdate'])->name('profile.update');
+    Route::get('logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/carrito/{id}', [App\Http\Controllers\ShopingCarController::class, 'index'])->name('Mi-Carrito');
+    Route::post('/anadir', [App\Http\Controllers\ShopingCarController::class, 'addShopingCar'])->name('add-shoping');
+    Route::put('/update-car/{id}', [App\Http\Controllers\ShopingCarController::class, 'updateShopingCar'])->name('update-shoping');
+    Route::delete('/delete-car/{id}', [App\Http\Controllers\ShopingCarController::class, 'destroy'])->name('destroy-shoping');
+});

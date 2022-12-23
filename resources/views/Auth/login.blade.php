@@ -17,15 +17,7 @@
 			<div class="col-lg-6">
 				<div class="login_form_inner">
 					<h3>Iniciar Sesion</h3>
-					@if(session('success'))
-					<p class="alert alert-success">{{ session('success') }}</p>
-					@endif
-					@if($errors->any())
-					@foreach($errors->all() as $err)
-					<p class="alert alert-danger">{{ $err }}</p>
-					@endforeach
-					@endif
-					<form action="{{route('login.verify')}}" method="POST">
+					<form class="row login_form" action="{{route('login.verify')}}" method="POST" novalidate="novalidate">
 						@csrf
 						<div class="col-md-12 form-group">
 							<input type="email" class="form-control" name="email" placeholder="Correo electronico"

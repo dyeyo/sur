@@ -21,7 +21,7 @@
       					@endif
 						<h3>Actualizar datos personales</h3>
 						
-						<form   action="{{route('profile.update',$user->id)}}" method="post"  >
+						<form  class="row login_form" action="{{route('profile.update',$user->id)}}" method="post"  >
 								@csrf
 								@method('put')
 								<div class="col-md-12 form-group">
@@ -57,7 +57,7 @@
 								@enderror
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="phone"  placeholder="Numero de Celular" value="{{$user->phone}}">
+								<input type="text" class="form-control" name="phone"  placeholder=" Numero de Celular" value="{{$user->phone}}">
 								@error('phone')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
