@@ -13,7 +13,7 @@
               <h6>${{$item->price}}</h6>
               <h6 class="l-through">${{$item->price+(19/100)}}</h6>
             </div>
-            <div class="prd-bottom row" style="margin-left: 0em;">
+            <div class="prd-bottom row" >
               <form method="POST" onclick="addShopingCar('{{$item->id}}')">
                 {{method_field('POST')}}
                 {{csrf_field()}}

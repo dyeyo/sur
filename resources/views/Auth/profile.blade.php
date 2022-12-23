@@ -57,7 +57,7 @@
 								@enderror
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="number" class="form-control" name="phone"  placeholder=" Numero de Celular" value="{{$user->phone}}">
+								<input type="text" class="form-control" name="phone"  placeholder="Numero de Celular" value="{{$user->phone}}">
 								@error('phone')
 								<small class="text-danger mt-1">
 									<strong>{{$message}}</strong>
