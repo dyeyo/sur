@@ -2,15 +2,59 @@
 @section('content')
 <section class="features-area section_gap">
   <div class="container">
-    <div class="row features-inner">
+    <h1 class="text-center">SUR TIENDA DE MAQUILLAJE</h1>
+    <div class="row justify-content-md-center mt-4">
+      <div class="col col-lg-6">
+        <h3 class="text-center">Mision</h3>
+        <p class="text-center">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, vero odit libero ex quos, nostrum blanditiis
+          quia
+          officiis harum adipisci quisquam rerum, saepe autem quibusdam praesentium perferendis accusamus vel non?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, vero odit libero ex quos, nostrum blanditiis
+          quia
+          officiis harum adipisci quisquam rerum, saepe autem quibusdam praesentium perferendis accusamus vel non?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, vero odit libero ex quos, nostrum blanditiis
+          quia
+          officiis harum adipisci quisquam rerum, saepe autem quibusdam praesentium perferendis accusamus vel non?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, vero odit libero ex quos, nostrum blanditiis
+          quia
+          officiis harum adipisci quisquam rerum, saepe autem quibusdam praesentium perferendis accusamus vel non?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, vero odit libero ex quos, nostrum blanditiis
+          quia
+          officiis harum adipisci quisquam rerum, saepe autem quibusdam praesentium perferendis accusamus vel non?
+        </p>
+      </div>
+      <div class="col col-lg-6">
+        <h3 class="text-center">Visión</h3>
+        <p class="text-center">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, vero odit libero ex quos, nostrum blanditiis
+          quia
+          officiis harum adipisci quisquam rerum, saepe autem quibusdam praesentium perferendis accusamus vel non?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, vero odit libero ex quos, nostrum blanditiis
+          quia
+          officiis harum adipisci quisquam rerum, saepe autem quibusdam praesentium perferendis accusamus vel non?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, vero odit libero ex quos, nostrum blanditiis
+          quia
+          officiis harum adipisci quisquam rerum, saepe autem quibusdam praesentium perferendis accusamus vel non?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, vero odit libero ex quos, nostrum blanditiis
+          quia
+          officiis harum adipisci quisquam rerum, saepe autem quibusdam praesentium perferendis accusamus vel non?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, vero odit libero ex quos, nostrum blanditiis
+          quia
+          officiis harum adipisci quisquam rerum, saepe autem quibusdam praesentium perferendis accusamus vel non?
+        </p>
+      </div>
+    </div>
+
+    <div class="row features-inner mt-4">
       <!-- single features -->
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="single-features">
           <div class="f-icon">
             <img src="img/features/f-icon1.png" alt="">
           </div>
-          <h6>Free Delivery</h6>
-          <p>Free Shipping on all order</p>
+          <h6>Envio a todo Colombia</h6>
+          <p>El pedido llega a puerta de tu casa</p>
         </div>
       </div>
       <!-- single features -->
@@ -19,8 +63,8 @@
           <div class="f-icon">
             <img src="img/features/f-icon2.png" alt="">
           </div>
-          <h6>Return Policy</h6>
-          <p>Free Shipping on all order</p>
+          <h6>Garantia</h6>
+          <p>Tu producto esta asegurado</p>
         </div>
       </div>
       <!-- single features -->
@@ -29,18 +73,18 @@
           <div class="f-icon">
             <img src="img/features/f-icon3.png" alt="">
           </div>
-          <h6>24/7 Support</h6>
-          <p>Free Shipping on all order</p>
+          <h6>Soporte 24/7</h6>
+          <p>Atención permanente.</p>
         </div>
       </div>
       <!-- single features -->
       <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="single-features">
           <div class="f-icon">
-            <img src="img/features/f-icon4.png" alt="">
+            <h1>$</h1>
           </div>
-          <h6>Secure Payment</h6>
-          <p>Free Shipping on all order</p>
+          <h6>Pago seguro</h6>
+          <p>Tu dinero esta asegurado</p>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailsShopingCar;
+use App\Models\Products;
 use App\Models\ShopingCar;
 use App\Models\User;
 use Carbon\Carbon;
@@ -39,7 +40,9 @@ class ShopingCarController extends Controller
 
         // Validar si tiene carrito
         $userCar = ShopingCar::where('user_id', $client)->get();
-
+        if (!isset($client)) {
+            return response()->json(['code' => 401]);
+        }
         // validar si existe el  producto
         if (count($userCar) === 0) {
             // car es metodo creado en el modelo User
@@ -48,14 +51,14 @@ class ShopingCarController extends Controller
             $car->status = 'Pending'; // Active, pending, Approved, Cancelled, Finished
             $car->order_date = Carbon::now();
             $car->save();
-            $this->checkProductIntoCar($request->id);
+            $this->checkProductIntoCar($request->id, $car->id);
             $datails_car = new DetailsShopingCar();
             $datails_car->quantity =  $request->quantity ? $request->quantity : 1;
             $datails_car->shoping_car_id = $car->id;
             $datails_car->product_id = $request->id;
             $datails_car->save();
         } else {
-            $this->checkProductIntoCar($request->id);
+            $this->checkProductIntoCar($request->id, $userCar[0]->id);
             $datails_car = new DetailsShopingCar();
             $datails_car->quantity =  $request->quantity ? $request->quantity : 1;
             $datails_car->shoping_car_id = $userCar[0]->id;
@@ -70,7 +73,14 @@ class ShopingCarController extends Controller
 
     public function updateShopingCar(Request $request)
     {
-        $update_quantity =  DetailsShopingCar::find($request->id);
+        $update_quantity = DetailsShopingCar::find($request->id);
+
+        // validad stock
+        $in_stock = Products::where('id', $update_quantity->product_id)->get();
+        if (intval($request->quantity) < $in_stock[0]->stock) {
+            return response()->json(['error' => 'No disponible en stock']);
+        }
+
         $update_quantity->quantity =  $request->quantity;
         $update_quantity->save();
         $message = 'Tu pedido se ha actualizado exitosamente.';
@@ -79,17 +89,20 @@ class ShopingCarController extends Controller
 
     public function destroy(Request $request)
     {
+        // dd($request->id);
         $idShpingCar = DetailsShopingCar::find($request->id);
         DetailsShopingCar::find($request->id)->delete();
-        if (DetailsShopingCar::where('id', $request->id)->count() === 0) {
-            ShopingCar::where('id', $idShpingCar->shoping_car_id)->delete();
-        }
+        // if (DetailsShopingCar::where('id', $request->id)->count() === 0) {
+        //     ShopingCar::where('id', $idShpingCar->shoping_car_id)->delete();
+        // }
         return response()->json(['success' => 'El pedido ha sido cancelado.']);
     }
 
-    public function checkProductIntoCar($idProduct)
+    public function checkProductIntoCar($idProduct, $car)
     {
-        $productCar = DetailsShopingCar::where('product_id', $idProduct)->get();
+        $productCar = DetailsShopingCar::where('shoping_car_id', $car)
+            ->where('product_id', $idProduct)
+            ->get();
         if (count($productCar) != 0) {
             throw new Error('El producto ya existe en el carrito.');
         }

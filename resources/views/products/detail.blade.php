@@ -25,11 +25,11 @@
           <p>{{$product->description}}</p>
           <div class="product_count">
             <label for="qty">Cantidad:</label>
-            <input type="text" name="qty" id="cantidad" maxlength="12" value="1" title="Quantity:"
+            <input type="number" name="qty" id="cantidad" max="{{$product->stock}}" value="1" title="Quantity:"
               class="input-text qty">
-            <button
+            <!-- <button
               onclick="var result = document.getElementById('cantidad'); var cantidad = result.value; if( !isNaN( cantidad )) result.value++;return false;"
-              class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+              class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button> -->
           </div>
           <div class="card_area d-flex align-items-center">
             <form method="POST">
@@ -165,10 +165,8 @@
         "X-CSRF-TOKEN": token
       }
     })
-      .then(response => response.json())
-      .then(async sys => {
-        console.log(sys);
-        if (sys.message == 'El producto ya existe en el carrito.') {
+      .then(response => {
+        if (response.status === 500) {
           const Toast = Swal.mixin({
             toast: true,
             position: 'top-right',
@@ -180,30 +178,49 @@
             timer: 2000,
             timerProgressBar: true
           })
-          await Toast.fire({
+          Toast.fire({
             icon: 'error',
-            title: sys.message
+            title: 'El producto ya existe en el carrito.'
           })
           return;
         }
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-right',
-          iconColor: 'white',
-          customClass: {
-            popup: 'colored-toast'
-          },
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true
-        })
-        await Toast.fire({
-          icon: 'success',
-          title: 'Produto añadido'
-        })
+        if (response.status === 401) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            iconColor: 'white',
+            customClass: {
+              popup: 'colored-toast'
+            },
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true
+          })
+          Toast.fire({
+            icon: 'error',
+            title: 'Debe iniciar sesion para agregar el producto'
+          })
+          return;
+        } else {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            iconColor: 'white',
+            customClass: {
+              popup: 'colored-toast'
+            },
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true
+          })
+          Toast.fire({
+            icon: 'success',
+            title: 'Produto añadido'
+          })
+        }
       })
       .catch(err => {
-        console.log(sys);
+        console.log(err);
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-right',

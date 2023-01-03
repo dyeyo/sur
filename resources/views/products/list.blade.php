@@ -13,11 +13,11 @@
               <h6>${{$item->price}}</h6>
               <h6 class="l-through">${{$item->price+(19/100)}}</h6>
             </div>
-            <div class="prd-bottom row" >
+            <div class="prd-bottom row">
               <form method="POST" onclick="addShopingCar('{{$item->id}}')">
                 {{method_field('POST')}}
                 {{csrf_field()}}
-                <a class=" social-info">
+                <a class="social-info">
                   <span class="ti-bag"></span>
                   <p class="hover-text">Añadir</p>
                 </a>
@@ -52,10 +52,8 @@
         "X-CSRF-TOKEN": token
       }
     })
-      .then(response => response.json())
-      .then(async sys => {
-        console.log('sys', sys);
-        if (sys.message == 'El producto ya existe en el carrito.') {
+      .then(response => {
+        if (response.status === 500) {
           const Toast = Swal.mixin({
             toast: true,
             position: 'top-right',
@@ -67,30 +65,50 @@
             timer: 2000,
             timerProgressBar: true
           })
-          await Toast.fire({
+          Toast.fire({
             icon: 'error',
-            title: sys.message
+            title: 'El producto ya existe en el carrito.'
           })
           return;
         }
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-right',
-          iconColor: 'white',
-          customClass: {
-            popup: 'colored-toast'
-          },
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true
-        })
-        await Toast.fire({
-          icon: 'success',
-          title: 'Produto añadido'
-        })
+        if (response.status === 401) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            iconColor: 'white',
+            customClass: {
+              popup: 'colored-toast'
+            },
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true
+          })
+          Toast.fire({
+            icon: 'error',
+            title: 'Debe iniciar sesion para agregar el producto'
+          })
+          return;
+        } else {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            iconColor: 'white',
+            customClass: {
+              popup: 'colored-toast'
+            },
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true
+          })
+          Toast.fire({
+            icon: 'success',
+            title: 'Produto añadido'
+          })
+        }
+
       })
       .catch(err => {
-        console.log(sys);
+        console.log(err);
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-right',

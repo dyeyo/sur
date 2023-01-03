@@ -99,13 +99,8 @@
     }
 
     $(".total span").html(price);
-    // $(".tax span").html(tax);
-    // $(".total span").html(fullPrice);
   }
 
-  function remove(id) {
-
-  }
   $(document).ready(function () {
     changeTotal()
     $(".remove").click(function () {
