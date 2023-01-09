@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
@@ -33,4 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/anadir', [App\Http\Controllers\ShopingCarController::class, 'addShopingCar'])->name('add-shoping');
     Route::put('/update-car/{id}', [App\Http\Controllers\ShopingCarController::class, 'updateShopingCar'])->name('update-shoping');
     Route::delete('/delete-car/{id}', [App\Http\Controllers\ShopingCarController::class, 'destroy'])->name('destroy-shoping');
+
+    // Checkout
+    Route::get('shopping-cart/{cart}/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('shopping-cart/{cart}/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 });

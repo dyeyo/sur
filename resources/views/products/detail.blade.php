@@ -156,7 +156,7 @@
       id: product,
       quantity,
     };
-    fetch(`http://127.0.0.1:8000/anadir/`, {
+    fetch(`{{ env('APP_URL') }}/anadir/`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
