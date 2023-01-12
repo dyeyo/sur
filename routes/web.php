@@ -38,4 +38,6 @@ Route::middleware('auth')->group(function () {
     // Checkout
     Route::get('shopping-cart/{cart}/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('shopping-cart/{cart}/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('billingAddress', [CheckoutController::class, 'createAddress'])->name('billingAddress.create');
+    Route::post('billingAddress', [CheckoutController::class, 'storeAddress'])->name('billingAddress.store');
 });

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckoutStoreRequest;
+use App\Http\Services\PayUService;
+use App\Models\BillingAddress;
 use App\Models\ShopingCar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -12,6 +14,12 @@ class CheckoutController extends Controller
 {
     public function index(ShopingCar $cart)
     {
+        $user = auth()->user();
+
+        if(!$user->billingAddress) {
+            return redirect()->route('billingAddress.create')->with('action', "shopping-cart/{$cart->id}/checkout");
+        }
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -53,11 +61,55 @@ class CheckoutController extends Controller
 
         $cart->load('details');
 
-        return view('checkout.index', ['shoppingCart' => $cart, 'banks' => $jsonBanks->banks]);
+        $deviceId = md5(session_id().microtime());
+
+        return view('checkout.index', ['shoppingCart' => $cart, 'banks' => $jsonBanks->banks, 'deviceId' => $deviceId]);
     }
 
-    public function store(CheckoutStoreRequest $request)
+    public function store(CheckoutStoreRequest $request, ShopingCar $cart)
     {
-        return $request->all();
+        // dd($request->cookies->get('laravel_session'));
+        $data = $request->all();
+        $data['ip'] = $request->ip();
+        $data['cookie'] = $request->cookies->get('laravel_session');
+        $data['user_agent'] = $request->server('HTTP_USER_AGENT');
+
+        $payuService = new PayUService();
+
+        $result = $payuService->makePSEPayment($cart, $data);
+
+        return $result;
+    }
+
+    public function createAddress()
+    {
+        return view('checkout.address', ['action' => session('action')]);
+    }
+
+    public function storeAddress(Request $request)
+    {
+        $request->validate([
+            'street' => 'required',
+            'second_street' => 'nullable',
+            'city' => 'required',
+            'state' => 'nullable',
+            'country' => 'required|string|max:2',
+            'postal_code' => 'nullable',
+            'phone' => 'required'
+        ]);
+
+        $data = $request->only(['street', 'second_street', 'city', 'state', 'country', 'postal_code', 'phone']);
+        $data['user_id'] = auth()->id();
+
+        $address = BillingAddress::create($data);
+
+        if(!$address) {
+            return redirect()->back()->with('message', 'No se agrego el registro');
+
+        } else if($address && $request->redirectAction) {
+            return redirect($request->redirectAction);
+        }
+
+        return redirect()->back()->with('message', 'Dirección de facturación agregada correctamente');
     }
 }
